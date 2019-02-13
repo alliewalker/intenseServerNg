@@ -9,14 +9,14 @@ let Review = sequelize.import("../models/review");
 
 /****Reviews ******* */
 router.post("/make", function (req, res) { //ok to receive a post request. On post you can create or send data to server
-    let date = req.body.trip.date;
-    let location= req.body.trip.location;
-    let numberPeople = req.body.trip.numberPeople;
+    console.log(req.body)
+    let review = req.body.review.review;
+    let starRating= req.body.review.starRating;
+    
     //console.log(req.body)
     Review.create({
-        date: date,
-        location: location,
-        numberPeople: numberPeople
+        review: review,
+        starRating: starRating,
     }).then(
         function createSuccess(review) {
             res.json({
@@ -49,14 +49,12 @@ Review.findAll()
 
 router.put("/promote/:id", function (req, res) {
     let input = req.params.id;
-    let date = req.body.trip.date;
-    let location= req.body.trip.location;
-    let numberPeople = req.body.trip.numberPeople;
+    let review = req.body.review.review;
+    let starRating= req.body.review.starRating;
     //console.log(req.body)
     Review.update({
-        date: date,
-        location: location,
-        numberPeople: numberPeople
+        review: review,
+        starRating: starRating,
     }, { where: { id: input }}) //update the review with the up above info which id is = to the input
     .then(
         function createSuccess(review) {

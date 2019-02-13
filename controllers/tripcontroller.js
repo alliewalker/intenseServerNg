@@ -31,14 +31,15 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
 })
 
 router.get("/read", function (req, res) { 
-console.log(req.user.dataValues.id)
-console.log("kjhgfdcvbnkjuytrfdcvbnmkJHGFDSDFGHJKJHGFDFGHJKJHGFRERTYUIJUHYGFDFGHJKLKJHG")
+//console.log(req.user.dataValues.id)
+//console.log("kjhgfdcvbnkjuytrfdcvbnmkJHGFDSDFGHJKJHGFDFGHJKJHGFRERTYUIJUHYGFDFGHJKLKJHG")
 Trip.findAll()
     .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
         function getSuccess(awesometrip) {  //if it can be found in the database then its a success
-            res.json({
+            console.log("###########", awesometrip)
+            res.status(200).json({
                 trip: awesometrip,
-                message: "Hello, there!",
+                message: "Hello, there!"
             })
         },
         function createError(err) { //will return with an error if it cant be found in the database
@@ -46,6 +47,14 @@ Trip.findAll()
         }
     )
 })
+
+// router.get("/read", (req, res) => {
+//     Trip.findAll()
+//     .then(awesomeTrip => {
+//         res.status(200).json({awesomeTrip: awesomeTrip})
+//     })
+//     .catch(err => res.status(500).json({error: err}))
+// })
 
 router.put("/promote/:id", function (req, res) {
     let input = req.params.id;

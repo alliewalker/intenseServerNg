@@ -8,7 +8,7 @@ let jwt = require("jsonwebtoken");
 //up above are called variables
 
 
-/** Register ***/
+/** SIGNUP ***/
 router.post("/create", function (req, res) { //ok to receive a post request
     let email = req.body.user.email;
     let password = req.body.user.password;
