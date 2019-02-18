@@ -30,7 +30,8 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
     )
 })
 
-router.get("/read", function (req, res) { 
+router.get("/read", function (req, res) {
+    console.log('getting there') 
 //console.log(req.user.dataValues.id)
 //console.log("kjhgfdcvbnkjuytrfdcvbnmkJHGFDSDFGHJKJHGFDFGHJKJHGFRERTYUIJUHYGFDFGHJKLKJHG")
 Trip.findAll()

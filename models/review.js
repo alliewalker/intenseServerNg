@@ -1,5 +1,5 @@
 module.exports = function( sequelize, DataTypes) {
-    return sequelize.define("reviews", { //what I put is the name of my table in postgres
+    const Review = sequelize.define("reviews", { //what I put is the name of my table in postgres
         review: {
             type: DataTypes.STRING,
             notEmpty: true
@@ -9,4 +9,9 @@ module.exports = function( sequelize, DataTypes) {
             notEmpty: true
         },
     })
+
+    const User = sequelize.import('./users');
+
+    Review.belongsTo(User) //this is DB associations
+    return Review; //this is DB associations, so is line 15, 13, and 2
 }

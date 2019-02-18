@@ -31,8 +31,8 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
 })
 
 router.get("/read", function (req, res) { 
-console.log(req.user.dataValues.id)
-console.log("kjhgfdcvbnkjuytrfdcvbnmkJHGFDSDFGHJKJHGFDFGHJKJHGFRERTYUIJUHYGFDFGHJKLKJHG")
+//console.log(req.user.dataValues.id)
+//console.log("kjhgfdcvbnkjuytrfdcvbnmkJHGFDSDFGHJKJHGFDFGHJKJHGFRERTYUIJUHYGFDFGHJKLKJHG")
 Review.findAll()
     .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
         function getSuccess(awesometrip) {  //if it can be found in the database then its a success
