@@ -1,5 +1,5 @@
 module.exports = function( sequelize, DataTypes) {
-    return sequelize.define("trips", { //what I put is the name of my table in postgres
+    const Trip = sequelize.define("trips", { //what I put is the name of my table in postgres
         date: {
             type: DataTypes.DATE,
             notEmpty: true
@@ -13,4 +13,9 @@ module.exports = function( sequelize, DataTypes) {
             notEmpty: true
         }
     })
+
+    const User = sequelize.import('./users');
+     
+    Trip.belongsTo(User)
+    return Trip;
 }
