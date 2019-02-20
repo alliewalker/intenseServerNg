@@ -53,8 +53,11 @@ router.post("/login", function (req, res) {
                 res.status(500).send({ error: "Not found." })
             }
         },
+        // .catch(err => {
+        //     res.status(500).send(err);
+        //     })
         function (err) {
-            res.status(501).send({ err: "Error don't know what happened." })
+            res.status(501).send({ err: err })
         }
     )
 })
