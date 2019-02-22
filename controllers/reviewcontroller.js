@@ -15,7 +15,7 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
     
     //console.log(req.body)
     Review.create({
-        review: review,
+        review,
         starRating: starRating,
     }).then(
         function createSuccess(review) {
@@ -24,30 +24,40 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
                 message: "Hello, there!",
             })
         },
-        function createError(err) {
-            res.send(500, err.message)
+        function createError(error) {
+            res.status(500).send(error.message)
         }
     )
 })
 
 router.get("/read", function (req, res) { 
-//console.log(req.user.dataValues.id)
-//console.log("kjhgfdcvbnkjuytrfdcvbnmkJHGFDSDFGHJKJHGFDFGHJKJHGFRERTYUIJUHYGFDFGHJKLKJHG")
-Review.findAll()
-    .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
-        function getSuccess(awesometrip) {  //if it can be found in the database then its a success
+    if(req.user.isAdmin) {
+        Review.findAll()
+            .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
+                function getSuccess(reviews) {  //if it can be found in the database then its a success
+                    res.json({
+                        reviews,
+                        message: "Hello, there!",
+                    })
+                },
+                function createError(error) { //will return with an error if it cant be found in the database
+                    res.status(500).send(error.message)
+                }
+            )
+    } else {
+        Review.findAll({
+            where: {userId: req.user.id}
+        }).then((reviews) => {
             res.json({
-                review: awesometrip,
-                message: "Hello, there!",
+                reviews
             })
-        },
-        function createError(err) { //will return with an error if it cant be found in the database
-            res.send(500, err.message)
-        }
-    )
+        }).catch((error) => {
+            res.status(500).send(error.message)
+        })
+    }
 })
 
-router.put("/promote/:id", function (req, res) {
+router.put("/update/:id", function (req, res) {
     let input = req.params.id;
     let review = req.body.review.review;
     let starRating= req.body.review.starRating;
@@ -63,8 +73,8 @@ router.put("/promote/:id", function (req, res) {
                 message: "Hello, there!",
             })
         },
-        function createError(err) {
-            res.send(500, err.message)
+        function createError(error) {
+            res.status(500).send(error.message)
         }
     )
 })
@@ -79,8 +89,8 @@ router.delete("/remove/:id", function (req, res) {
                 message: "Hello, there!",
             })
         },
-        function createError(err) {
-            res.send(500, err.message)
+        function createError(error) {
+            res.status(500).send(error.message)
         }
     )
 })

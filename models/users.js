@@ -15,7 +15,7 @@ module.exports = function( sequelize, DataTypes) {
         userRole: {               //IN MY CONTROLLER ASSIGN VALUE TO THIS
             type: DataTypes.STRING,
         },
-        adminStatus: DataTypes.BOOLEAN
+        isAdmin: DataTypes.BOOLEAN
     })
 }
 
