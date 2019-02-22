@@ -17,11 +17,12 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
     Review.create({
         review,
         starRating: starRating,
+        userId: req.user.id
     }).then(
         function createSuccess(review) {
             res.json({
                 created: review,
-                message: "Hello, there!",
+                message: "Hello, there!"
             })
         },
         function createError(error) {

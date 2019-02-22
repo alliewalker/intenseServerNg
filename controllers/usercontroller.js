@@ -43,10 +43,10 @@ router.post("/login", function (req, res) {
                         res.json({
                             user: user,
                             message: "",
-                            sessionToken: token
+                            token: token
                         })
                     } else {
-                        res.status(502).send({ error: "Please provide valid credentials ." })
+                        res.status(403).send({ error: "Please provide valid credentials ." })
                     }
                 })
             } else {
@@ -54,7 +54,7 @@ router.post("/login", function (req, res) {
             }
         },
         function (err) {
-            res.status(501).send({ err: "Error don't know what happened." })
+            res.status(500).send({ err: err.message })
         }
     )
 })
