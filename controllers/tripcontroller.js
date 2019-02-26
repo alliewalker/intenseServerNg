@@ -3,59 +3,48 @@ let router = express.Router();
 let sequelize = require("../db");
 let Trip = sequelize.import("../models/trip");
 
-
 //up above are called variables
 
-
 /****Trips ******* */
-router.post("/make", function (req, res) { //ok to receive a post request. On post you can create or send data to server
+router.post("/make", (req, res) => { //ok to receive a post request. On post you can create or send data to server
+    console.log(req.body.trip)
     let date = req.body.trip.date;
     let location= req.body.trip.location;
     let numberPeople = req.body.trip.numberPeople;
-    //console.log(req.body)
     Trip.create({
         date: date,
         location: location,
         numberPeople: numberPeople
     }).then(
-        function createSuccess(trip) {
+        createSuccess = (trip) => {
             res.json({
                 created: trip,
                 message: "Hello, there!",
             })
         },
-        function createError(err) {
-            res.send(500, err.message)
+        createError = (err) => {
+            res.status(500).send(err.message)
         }
     )
 })
 
-router.get("/read", function (req, res) {
-    console.log('getting there') 
+router.get("/read", (req, res) => {
+    // console.log('getting there') 
 //console.log(req.user.dataValues.id)
-//console.log("kjhgfdcvbnkjuytrfdcvbnmkJHGFDSDFGHJKJHGFDFGHJKJHGFRERTYUIJUHYGFDFGHJKLKJHG")
+
 Trip.findAll()
     .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
-        function getSuccess(awesometrip) {  //if it can be found in the database then its a success
-            console.log("###########", awesometrip)
+        getSuccess = (allTrips) => {  //if it can be found in the database then its a success
             res.status(200).json({
-                trip: awesometrip,
+                trip: allTrips,
                 message: "Hello, there!"
             })
         },
-        function createError(err) { //will return with an error if it cant be found in the database
-            res.send(500, err.message)
+        createError = (err) => { //will return with an error if it cant be found in the database
+            res.status(500).send(err.message)
         }
     )
 })
-
-// router.get("/read", (req, res) => {
-//     Trip.findAll()
-//     .then(awesomeTrip => {
-//         res.status(200).json({awesomeTrip: awesomeTrip})
-//     })
-//     .catch(err => res.status(500).json({error: err}))
-// })
 
 router.put("/promote/:id", function (req, res) {
     let input = req.params.id;

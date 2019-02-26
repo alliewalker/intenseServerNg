@@ -1,7 +1,7 @@
 module.exports = function( sequelize, DataTypes) {
     const Trip = sequelize.define("trips", { //what I put is the name of my table in postgres
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.RANGE(DataTypes.DATEONLY), //YEAR - MONTH - DAY!
             notEmpty: true
         },
         location: {

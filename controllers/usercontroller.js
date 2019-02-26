@@ -12,7 +12,7 @@ let jwt = require("jsonwebtoken");
 router.post("/create", function (req, res) { //ok to receive a post request
     let email = req.body.user.email;
     let password = req.body.user.password;
-    //console.log(req.body)
+    console.log(req.body)
     User.create({
         email: email,
         passwordhash: bcrypt.hashSync(password, 10),  //this means you will do 10 rounds of bycrpt.
@@ -20,7 +20,7 @@ router.post("/create", function (req, res) { //ok to receive a post request
         function createSuccess(user) {
             let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
             res.json({
-                user: [user.id,user.email], //return so that Angular can track if someone is actually logged in
+                user: [user.id, user.email], //return so that Angular can track if someone is actually logged in
                 token: token,
                 message: "Hello, there!",
             })
