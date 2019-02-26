@@ -32,20 +32,19 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
 
 router.get("/read", function (req, res) { 
 //console.log(req.user.dataValues.id)
-
-Review.findAll()
-    .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
-        function getSuccess(awesometrip) {  //if it can be found in the database then its a success
-            res.json({
-                review: awesometrip,
-                message: "Hello, there!",
-            })
-        },
-        function createError(err) { //will return with an error if it cant be found in the database
-            res.send(500, err.message)
-        }
-    )
-})
+    Review.findAll()
+        .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
+            function getSuccess(awesometrip) {  //if it can be found in the database then its a success
+                res.json({
+                    review: awesometrip,
+                    message: "Hello, there!",
+                })
+            },
+            function createError(err) { //will return with an error if it cant be found in the database
+                res.status(500).send(err.message)
+            }
+        )
+    })
 
 router.put("/promote/:id", function (req, res) {
     let input = req.params.id;

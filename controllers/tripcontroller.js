@@ -30,18 +30,17 @@ router.post("/make", (req, res) => { //ok to receive a post request. On post you
 
 router.get("/read", (req, res) => {
     // console.log('getting there') 
-//console.log(req.user.dataValues.id)
-
-Trip.findAll()
-    .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
-        getSuccess = (allTrips) => {  //if it can be found in the database then its a success
-            res.status(200).json({
-                trip: allTrips,
-                message: "Hello, there!"
-            })
-        },
-        createError = (err) => { //will return with an error if it cant be found in the database
-            res.status(500).send(err.message)
+    //console.log(req.user.dataValues.id)
+    Trip.findAll()
+        .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
+            getSuccess = (allTrips) => {  //if it can be found in the database then its a success
+                res.status(200).json({
+                    trip: allTrips,
+                    message: "Hello, there!"
+                })
+            },
+            createError = (err) => { //will return with an error if it cant be found in the database
+                res.status(500).send(err.message)
         }
     )
 })
@@ -81,7 +80,7 @@ router.delete("/remove/:id", function (req, res) {
             })
         },
         function createError(err) {
-            res.send(500, err.message)
+            res.status(500).send(err.message)
         }
     )
 })
