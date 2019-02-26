@@ -10,11 +10,14 @@ let jwt = require("jsonwebtoken");
 
 /** SIGNUP ***/
 router.post("/create", function (req, res) { //ok to receive a post request
+    console.log('signing up')
     let email = req.body.user.email;
     let password = req.body.user.password;
+    let isAdmin = req.body.user.isAdmin || false;
     console.log('email, password')
     User.create({
         email: email,
+        isAdmin: isAdmin,
         passwordhash: bcrypt.hashSync(password, 10),  //this means you will do 10 rounds of bycrpt.
     }).then(
         function createSuccess(user) {
@@ -26,7 +29,7 @@ router.post("/create", function (req, res) { //ok to receive a post request
             })
         },
         function createError(err) {
-            res.send(500, err.message)
+            res.send(500, err.errors[0].message || err.message)
         }
     )
 })

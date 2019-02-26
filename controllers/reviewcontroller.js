@@ -39,6 +39,7 @@ router.get("/read", function (req, res) {
                     res.json({
                         reviews,
                         message: "Hello, there!",
+                        order: ['createdAt', 'ASC']
                     })
                 },
                 function createError(error) { //will return with an error if it cant be found in the database
@@ -50,7 +51,8 @@ router.get("/read", function (req, res) {
             where: {userId: req.user.id}
         }).then((reviews) => {
             res.json({
-                reviews
+                reviews,
+                order: ['createdAt', 'ASC']
             })
         }).catch((error) => {
             res.status(500).send(error.message)
@@ -60,6 +62,7 @@ router.get("/read", function (req, res) {
 
 router.put("/update/:id", function (req, res) {
     let input = req.params.id;
+    
     let review = req.body.review.review;
     let starRating= req.body.review.starRating;
     //console.log(req.body)
