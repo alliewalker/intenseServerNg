@@ -62,7 +62,7 @@ router.get("/read", function (req, res) {
 
 router.put("/update/:id", function (req, res) {
     let input = req.params.id;
-    
+
     let review = req.body.review.review;
     let starRating= req.body.review.starRating;
     //console.log(req.body)

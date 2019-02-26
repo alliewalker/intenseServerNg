@@ -23,7 +23,7 @@ router.post("/create", function (req, res) { //ok to receive a post request
         function createSuccess(user) {
             let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
             res.json({
-                user: user,
+                user: [user.id, user.email], //return so that Angular can track if someone is actually logged in
                 token: token,
                 message: "Hello, there!",
             })
@@ -56,6 +56,9 @@ router.post("/login", function (req, res) {
                 res.status(500).send({ error: "Not found." })
             }
         },
+        // .catch(err => {
+        //     res.status(500).send(err);
+        //     })
         function (err) {
             res.status(500).send({ err: err.message })
         }
