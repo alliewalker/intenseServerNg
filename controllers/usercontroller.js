@@ -10,13 +10,20 @@ let jwt = require("jsonwebtoken");
 
 /** SIGNUP ***/
 router.post("/create", function (req, res) { //ok to receive a post request
+    console.log('signing up')
     let email = req.body.user.email;
     let password = req.body.user.password;
+<<<<<<< HEAD
     let adminStatus = req.body.user.adminStatus;
     let userRole = req.body.user.userRole;
     //console.log(req.body)
+=======
+    let isAdmin = req.body.user.isAdmin || false;
+    console.log('email, password')
+>>>>>>> 78aa21fd9e883ac47a8035fd381232845489a4a3
     User.create({
         email: email,
+        isAdmin: isAdmin,
         passwordhash: bcrypt.hashSync(password, 10),  //this means you will do 10 rounds of bycrpt.
         adminStatus: adminStatus,
         userRole: userRole
@@ -30,7 +37,7 @@ router.post("/create", function (req, res) { //ok to receive a post request
             })
         },
         function createError(err) {
-            res.send(500, err.message)
+            res.send(500, err.errors[0].message || err.message)
         }
     )
 })
@@ -47,10 +54,10 @@ router.post("/login", function (req, res) {
                         res.json({
                             user: user,
                             message: "",
-                            sessionToken: token
+                            token: token
                         })
                     } else {
-                        res.status(502).send({ error: "Please provide valid credentials ." })
+                        res.status(403).send({ error: "Please provide valid credentials ." })
                     }
                 })
             } else {
@@ -61,7 +68,7 @@ router.post("/login", function (req, res) {
         //     res.status(500).send(err);
         //     })
         function (err) {
-            res.status(501).send({ err: err })
+            res.status(500).send({ err: err.message })
         }
     )
 })
