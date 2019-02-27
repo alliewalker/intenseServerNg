@@ -18,8 +18,8 @@ router.post("/create", function (req, res) { //ok to receive a post request
         email: email,
         isAdmin: isAdmin,
         passwordhash: bcrypt.hashSync(password, 10),  //this means you will do 10 rounds of bycrpt.
-        adminStatus: adminStatus,
-        userRole: userRole
+        // adminStatus: adminStatus,
+        // userRole: userRole
     }).then(
         function createSuccess(user) {
             let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
@@ -30,14 +30,18 @@ router.post("/create", function (req, res) { //ok to receive a post request
             })
         },
         function createError(err) {
-            res.send(500, err.errors[0].message || err.message)
+            res.status(500).send(err.errors[0].message || err.message)
         }
     )
 })
 
 /*** Login *** */
 router.post("/login", function (req, res) {
-    User.findOne({ where: { email: req.body.user.email } })
+     
+    User.findOne({ where: { email: req.body.user.email },
+        // adminStatus: adminStatus,
+        // userRole: userRole 
+    })
     .then(
         function (user) {
             if (user) {

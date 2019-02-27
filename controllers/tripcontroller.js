@@ -32,7 +32,8 @@ router.post("/make", (req, res) => { //ok to receive a post request. On post you
 
 router.get("/read", (req, res) => {
     console.log('getting there') 
-if(req.user.isAdmin) {
+// if(req.user.isAdmin) 
+{
     Trip.findAll()
         .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
             function getSuccess(allTrips) {  //if it can be found in the database then its a success
@@ -45,14 +46,15 @@ if(req.user.isAdmin) {
             res.status(500).send(err.message)
         }
     )
-} else {
-    Trip.findAll({where: {userId: req.user.Id}}).then((Trips) => {
-        res.status(200).json({ Trips })
-    }).catch((err) => {
-        console.log(err)
-        res.status(500).send(err.errors ? err.errors[0].message : err.message)
-         })
-    }
+} 
+// else {
+//     Trip.findAll({where: {userId: req.user.Id}}).then((Trips) => {
+//         res.status(200).json({ Trips })
+//     }).catch((err) => {
+//         console.log(err)
+//         res.status(500).send(err.errors ? err.errors[0].message : err.message)
+//          })
+//     }
 })
 
 
