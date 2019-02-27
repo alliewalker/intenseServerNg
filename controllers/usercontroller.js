@@ -7,7 +7,6 @@ let jwt = require("jsonwebtoken");
 
 //up above are called variables
 
-
 /** SIGNUP ***/
 router.post("/create", function (req, res) { //ok to receive a post request
     let email = req.body.user.email;
@@ -81,7 +80,7 @@ router.put("/promote/:id", function (req, res) {
             })
         },
         function createError(err) {
-            res.send(500, err.message)
+            res.status(500).send(err.message)
         }
     )
 })
@@ -98,7 +97,7 @@ router.delete("/remove/:id", function (req, res) {
             })
         },
         function createError(err) {
-            res.send(500, err.message)
+            res.status(500).send(err.message)
         }
     )
 })
