@@ -13,14 +13,8 @@ router.post("/create", function (req, res) { //ok to receive a post request
     console.log('signing up')
     let email = req.body.user.email;
     let password = req.body.user.password;
-<<<<<<< HEAD
-    let adminStatus = req.body.user.adminStatus;
-    let userRole = req.body.user.userRole;
-    //console.log(req.body)
-=======
     let isAdmin = req.body.user.isAdmin || false;
     console.log('email, password')
->>>>>>> 78aa21fd9e883ac47a8035fd381232845489a4a3
     User.create({
         email: email,
         isAdmin: isAdmin,

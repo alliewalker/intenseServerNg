@@ -13,9 +13,9 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
     let review = req.body.review.review;
     let starRating= req.body.review.starRating;
     
-    //console.log(req.body)
+    console.log(req.body)
     Review.create({
-        review,
+        review: review,
         starRating: starRating,
         userId: req.user.id
     }).then(
@@ -26,13 +26,17 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
             })
         },
         function createError(error) {
-            res.status(500).send(error.message)
+            res.send(500, error.errors[0].message || error.message)
         }
     )
 })
 
 router.get("/read", function (req, res) { 
+<<<<<<< HEAD
 //console.log(req.user.dataValues.id)
+=======
+    console.log('getting reviews')
+>>>>>>> 527e4e716cfa643fd3df57e08aca2df2e0bb85ca
     if(req.user.isAdmin) {
         Review.findAll()
             .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
@@ -43,20 +47,17 @@ router.get("/read", function (req, res) {
                         order: ['createdAt', 'ASC']
                     })
                 },
-                function createError(error) { //will return with an error if it cant be found in the database
-                    res.status(500).send(error.message)
+                function createError(err) { //will return with an error if it cant be found in the database
+                    res.send(500, err.errors[0].message || err.message)
                 }
             )
     } else {
-        Review.findAll({
-            where: {userId: req.user.id}
-        }).then((reviews) => {
-            res.json({
-                reviews,
-                order: ['createdAt', 'ASC']
-            })
-        }).catch((error) => {
-            res.status(500).send(error.message)
+        console.log('getting reviews for user', req.user.id)
+        Review.findAll({where: {userId: req.user.id}}).then((reviews) => {
+            res.status(200).json({ reviews })
+        }).catch((err) => {
+            console.error(err)
+            res.status(500).send(err.errors ? err.errors[0].message : err.message)
         })
     }
 })
