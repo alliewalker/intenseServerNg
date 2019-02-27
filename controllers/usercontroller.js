@@ -12,13 +12,9 @@ let jwt = require("jsonwebtoken");
 router.post("/create", function (req, res) { //ok to receive a post request
     let email = req.body.user.email;
     let password = req.body.user.password;
-<<<<<<< HEAD
-    console.log(req.body)
-=======
     let adminStatus = req.body.user.adminStatus;
     let userRole = req.body.user.userRole;
     //console.log(req.body)
->>>>>>> aa16e5cb45dd945f42497cf8276d8e4043a75f86
     User.create({
         email: email,
         passwordhash: bcrypt.hashSync(password, 10),  //this means you will do 10 rounds of bycrpt.
