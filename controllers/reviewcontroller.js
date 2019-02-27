@@ -32,11 +32,7 @@ router.post("/make", function (req, res) { //ok to receive a post request. On po
 })
 
 router.get("/read", function (req, res) { 
-<<<<<<< HEAD
 //console.log(req.user.dataValues.id)
-=======
-    console.log('getting reviews')
->>>>>>> 527e4e716cfa643fd3df57e08aca2df2e0bb85ca
     if(req.user.isAdmin) {
         Review.findAll()
             .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
