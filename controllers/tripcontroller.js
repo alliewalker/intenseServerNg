@@ -11,47 +11,58 @@ router.post("/make", (req, res) => { //ok to receive a post request. On post you
     let date = req.body.trip.date;
     let location= req.body.trip.location;
     let numberPeople = req.body.trip.numberPeople;
+
     Trip.create({
         date: date,
         location: location,
-        numberPeople: numberPeople
+        numberPeople: numberPeople,
+        userId: req.user.id
     }).then(
         createSuccess = (trip) => {
             res.json({
                 created: trip,
-                message: "Hello, there!",
+                message: "Your trip has been booked!",
             })
         },
-        createError = (err) => {
-            res.status(500).send(err.message)
+        function createError(error) {
+            res.send(500, error.errors[0].message || error.message)
         }
     )
 })
 
 router.get("/read", (req, res) => {
-    // console.log('getting there') 
-//console.log(req.user.dataValues.id)
-
-Trip.findAll()
-    .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
-        getSuccess = (allTrips) => {  //if it can be found in the database then its a success
-            res.status(200).json({
-                trip: allTrips,
-                message: "Hello, there!"
+    console.log('getting there') 
+if(req.user.isAdmin) {
+    Trip.findAll()
+        .then( //.then passes any info found to the 1st function if found or 2nd function if there is an error
+            function getSuccess(allTrips) {  //if it can be found in the database then its a success
+                res.status(200).json({
+                    trip: allTrips,
+                    message: "Hello, there!"
             })
         },
         createError = (err) => { //will return with an error if it cant be found in the database
             res.status(500).send(err.message)
         }
     )
+} else {
+    Trip.findAll({where: {userId: req.user.Id}}).then((Trips) => {
+        res.status(200).json({ Trips })
+    }).catch((err) => {
+        console.log(err)
+        res.status(500).send(err.errors ? err.errors[0].message : err.message)
+         })
+    }
 })
+
+
 
 router.put("/promote/:id", function (req, res) {
     let input = req.params.id;
     let date = req.body.trip.date;
     let location= req.body.trip.location;
     let numberPeople = req.body.trip.numberPeople;
-    //console.log(req.body)
+
     Trip.update({
         date: date,
         location: location,

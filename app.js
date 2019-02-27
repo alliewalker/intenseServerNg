@@ -4,6 +4,7 @@ let express = require("express");
 let app = express();
 let sequelize = require("./db");
 let bodyParser = require('body-parser');
+let cors = require('cors');
 
 require('./db').sync();
 let User = require("./controllers/usercontroller");
@@ -11,8 +12,10 @@ let Trip = require("./controllers/tripcontroller");
 let Review = require("./controllers/reviewcontroller");
 sequelize.sync()
 
-app.use(require("./middleware/headers"))
-
+app.use(cors({
+    exposedHeaders: ['Authorization'],
+    credentials: true
+}))
 app.use(bodyParser.json());
 
 app.use("/user", User);
