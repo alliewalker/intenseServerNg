@@ -1,13 +1,14 @@
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
+  dialect: "postgres",
+  logging: false
 });
 sequelize.authenticate().then(
-    function(){
-        console.log("Connected to intensedb database.");
-    },
-    function(err){
-        console.log(err);
-    }
-)
-module.exports = sequelize
+  function() {
+    console.log("Connected to intensedb database.");
+  },
+  function(err) {
+    console.log(err);
+  }
+);
+module.exports = sequelize;
