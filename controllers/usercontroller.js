@@ -14,7 +14,7 @@ router.post("/create", function(req, res) {
   let email = req.body.user.email;
   let password = req.body.user.password;
   let isAdmin = req.body.user.isAdmin || false;
-  console.log("email, password");
+  console.log("email, password", email, password);
   User.create({
     email: email,
     isAdmin: isAdmin,
@@ -31,6 +31,7 @@ router.post("/create", function(req, res) {
       });
     },
     function createError(err) {
+      console.error("got error", err);
       if (err.errors) {
         res.status(500).send(err.errors[0].message);
       } else {
